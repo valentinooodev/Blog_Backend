@@ -52,3 +52,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.user_name
+
+    class Meta:
+        verbose_name_plural = 'Users'
+        db_table = 'users'
