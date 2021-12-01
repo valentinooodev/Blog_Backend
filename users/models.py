@@ -56,3 +56,4 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name_plural = 'Users'
         db_table = 'users'
+

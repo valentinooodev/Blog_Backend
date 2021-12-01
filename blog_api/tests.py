@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from blog.models import PostModel, CategoryModel
-from django.contrib.auth.models import User
+from users.models import UserModel
 from rest_framework.test import APIClient
 
 
@@ -22,11 +22,11 @@ class PostTests(APITestCase):
         """
         self.test_category = CategoryModel.objects.create(name='django')
 
-        self.testuser1 = User.objects.create_user(
+        self.testuser1 = UserModel.objects.create_user(
             username='test_user1', password='123456789')
 
         data = {"title": "new", "author": 1,
-                "excerpt": "new", "content": "new"}
+                "description": "new", "content": "new"}
         url = reverse('blog_api:post_list')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -39,10 +39,12 @@ class PostTests(APITestCase):
         client = APIClient()
 
         self.test_category = CategoryModel.objects.create(name='django')
-        self.testuser1 = User.objects.create_user(
-            username='test_user1', password='123456789')
-        self.testuser2 = User.objects.create_user(
-            username='test_user2', password='123456789')
+        self.testuser1 = UserModel.objects.create_user(
+            email='test_user1@gmail.com',
+            user_name='test_user1', password='123456789')
+        self.testuser2 = UserModel.objects.create_user(
+            email='test_user2@gmail.com',
+            user_name='test_user2', password='123456789')
         test_post = PostModel.objects.create(
             category_id=1, title='Post Title', description='Post Description', content='Post Content',
             slug='post-title',
