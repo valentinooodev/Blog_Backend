@@ -40,17 +40,17 @@ class PostTests(APITestCase):
 
         self.test_category = CategoryModel.objects.create(name='django')
         self.testuser1 = UserModel.objects.create_user(
-            email='test_user1@gmail.com',
+            email='test_user1@gmail.com', full_name='user1',
             user_name='test_user1', password='123456789')
         self.testuser2 = UserModel.objects.create_user(
-            email='test_user2@gmail.com',
+            email='test_user2@gmail.com',  full_name='user2',
             user_name='test_user2', password='123456789')
         test_post = PostModel.objects.create(
             category_id=1, title='Post Title', description='Post Description', content='Post Content',
             slug='post-title',
             author_id=1, status='published')
 
-        client.login(username=self.testuser1.username,
+        client.login(username=self.testuser1.user_name,
                      password='123456789')
 
         url = reverse(('blog_api:post_detail'), kwargs={'pk': 1})
