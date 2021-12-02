@@ -13,6 +13,11 @@ app_name = 'blog_api'
 urlpatterns = [
 
     path('', views.UserPostListAPIView.as_view(), name='user_post_list'),
-    path('posts/', views.PostDetailAPIView.as_view(), name='post_detail'),
+    path('<str:pk>', views.PostDetailAPIView.as_view(), name='post_detail'),
     path('search/', views.PostListAPIView.as_view(), name='post_list'),
+    # Post admin
+    path('admin/create/', views.CreatePost.as_view(), name='create_post'),
+    path('admin/edit/postdetail/<int:pk>/', views.AdminPostDetail.as_view(), name='admin_detail_post'),
+    path('admin/edit/<int:pk>/', views.EditPost.as_view(), name='edit_post'),
+    path('admin/delete/<int:pk>/', views.DeletePost.as_view(), name='delete_post'),
 ]
