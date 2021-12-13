@@ -8,18 +8,12 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    # Oath
-    path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-
     # Project URLs
     path('admin/', admin.site.urls),
-    path('', include('blog.urls', namespace='blog')),
-
-    # User Management
-    path('api/v1/user/', include('users.urls', namespace='users')),
+    path('', include('apps.blog.urls', namespace='blog')),
 
     # Blog API Application
-    path('api/v1/', include('blog_api.urls', namespace='blog_api')),
+    path('api/v1/', include('apps.blog_api.urls', namespace='blog_api')),
 
     # API Schema & Docs
     path('docs/', include_docs_urls(title='PythonistaAPI')),
