@@ -1,5 +1,5 @@
 from django.db import models
-from apps.blog.models import PostModel
+from apps.blog.models import PostModel, SubPostModel
 from django.conf import settings
 
 
@@ -7,7 +7,8 @@ from django.conf import settings
 
 class UpvoteModel(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_upvote')
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_upvote')
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_upvote', null=True, blank=True)
+    subpost = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='subpost_upvote', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -21,7 +22,8 @@ class UpvoteModel(models.Model):
 
 class CommentModel(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_comment')
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_comment')
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_comment', null=True, blank=True)
+    subpost = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='subpost_comment', null=True, blank=True)
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

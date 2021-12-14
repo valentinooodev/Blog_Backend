@@ -7,7 +7,7 @@ from .models import UpvoteModel, CommentModel
 
 class CreateUpvote(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = UpvoteSerializer
+    serializer_class = CreateUpvoteSerializer
     queryset = UpvoteModel.objects.all()
 
     def perform_create(self, serializer):
@@ -30,7 +30,7 @@ class CommentList(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         item = self.kwargs.get('pk')
-        cmts = CommentModel.objects.filter(post_id=item)
+        cmts = CommentModel.objects.filter(post__slug=item)
         serializer = CommentSerializer(cmts, many=True)
         return Response(serializer.data)
 

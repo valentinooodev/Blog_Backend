@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
+    'django_extensions',
 
     # local apps
     'apps.commons',
@@ -160,4 +161,3 @@ AUTH_USER_MODEL = 'users.UserModel'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-

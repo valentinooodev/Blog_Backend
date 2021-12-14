@@ -1,4 +1,5 @@
-from .views import PostList, PostDetail, PostListDetailFilter, CreatePost, EditPost, AdminPostDetail, DeletePost
+from .views import PostList, PostDetail, PostListDetailFilter, CreatePost, EditPost, AdminPostDetail, DeletePost,\
+    PostListByCategory, CategoryList
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -22,6 +23,8 @@ urlpatterns = [
     path('', PostList.as_view(), name='list_post'),
     path('post/<str:pk>/', PostDetail.as_view(), name='detail_post'),
     path('search/', PostListDetailFilter.as_view(), name='search_post'),
+    path('categories/', CategoryList.as_view(), name='category_list'),
+    path('category/<str:pk>/', PostListByCategory.as_view(), name='category_post'),
 
 
     # Post Admin URLs

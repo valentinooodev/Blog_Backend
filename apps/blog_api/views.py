@@ -1,23 +1,30 @@
 from django.shortcuts import get_object_or_404
 from apps.blog.models import PostModel, CategoryModel
+from rest_framework.views import Response
 from apps.action.models import CommentModel
 from .serializers import PostSerializer, CategorySerializer
 from rest_framework import filters, generics, permissions
 
 
+class CategoryList(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = CategoryModel.objects.all()
+
+
 # Display Posts
 class PostList(generics.ListAPIView):
     serializer_class = PostSerializer
-    queryset = PostModel.objects.all()
+    queryset = PostModel.postobjects.all()
 
 
 class PostListByCategory(generics.RetrieveAPIView):
     serializer_class = CategorySerializer
 
-    def get_object(self, queryset=None, **kwargs):
+    def get(self, request, *args, **kwargs):
         item = self.kwargs.get('pk')
-        result = get_object_or_404(CategoryModel, slug=item)
-        return result
+        posts = PostModel.postobjects.filter(category__slug=item)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
 
 
 class PostDetail(generics.RetrieveAPIView):
@@ -36,6 +43,7 @@ class PostDetail(generics.RetrieveAPIView):
 
 # Post Search
 class PostListDetailFilter(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
     filter_backends = [filters.SearchFilter]
@@ -43,7 +51,6 @@ class PostListDetailFilter(generics.ListAPIView):
 
 
 # Post Admin
-
 class CreatePost(generics.CreateAPIView):
     permission_classes = [permissions.IsAdminUser]
     queryset = PostModel.objects.all()
