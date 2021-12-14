@@ -1,4 +1,4 @@
-FROM python:3.8.8-alpine
+FROM python:3.8-alpine
 ENV PYTHONUNBUFFERED 1
 WORKDIR /django
 COPY requirements.txt requirements.txt
