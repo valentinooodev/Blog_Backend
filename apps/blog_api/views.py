@@ -4,6 +4,7 @@ from rest_framework.views import Response
 from apps.action.models import CommentModel
 from .serializers import PostSerializer, CategorySerializer
 from rest_framework import filters, generics, permissions
+from apps.commons.paginator import CustomPagination
 
 
 class CategoryList(generics.ListAPIView):
@@ -13,6 +14,7 @@ class CategoryList(generics.ListAPIView):
 
 # Display Posts
 class PostList(generics.ListAPIView):
+    pagination_class = CustomPagination
     serializer_class = PostSerializer
     queryset = PostModel.postobjects.all()
 
@@ -46,6 +48,7 @@ class PostListDetailFilter(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
+    pagination_class = CustomPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['^slug']
 

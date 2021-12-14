@@ -22,6 +22,9 @@ class PostSerializer(serializers.ModelSerializer):
         upvotes = obj.post_upvote.all()
         return len(list(upvotes))
 
+    def get_is_upvoted(self, obj):
+        test = request.user.id
+
 
 # class SeriesSerializer(serializers.ModelSerializer):
 #

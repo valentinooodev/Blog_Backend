@@ -39,3 +39,10 @@ class Upvote(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CommentSerializer
     queryset = UpvoteModel.objects.all()
+
+
+class DeleleUpvote(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CommentSerializer
+    queryset = UpvoteModel.objects.all()
+
